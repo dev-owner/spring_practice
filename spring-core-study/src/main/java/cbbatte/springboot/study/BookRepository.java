@@ -1,4 +1,6 @@
 package cbbatte.springboot.study;
 
-public class BookRepository {
+import org.springframework.stereotype.Repository;
+
+public interface BookRepository {
 }

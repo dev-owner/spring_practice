@@ -1,9 +1,14 @@
 package cbbatte.springboot.study;
 
-public class BookService {
-    BookRepository bookRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-    public void setBookRepository(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
+import javax.annotation.PostConstruct;
+
+
+@Service
+public class BookService {
+    @Autowired
+    BookRepository myBookRepository;
+
 }
