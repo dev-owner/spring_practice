@@ -7,21 +7,46 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
-import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.Locale;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 @Component
 public class AppRunner implements ApplicationRunner {
 
     @Autowired
     ApplicationContext applicationContext;
+
+    @Autowired
+    ApplicationEventPublisher applicationEventPublisher;
+
+
+    @Autowired
+    ResourceLoader resourceLoader;
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        Resource resource = resourceLoader.getResource("classpath:test.txt");
+
+        System.out.println(resource.exists());
+
+        String description = resource.getDescription();
+        System.out.println("description = " + description);
+
+        InputStream inputStream = resource.getInputStream();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line;
+
+        while ((line = bufferedReader.readLine()) != null) {
+            System.out.println(line);
+        }
+    }
+
 
     @Autowired
     BookRepository bookRepository;
@@ -32,13 +57,9 @@ public class AppRunner implements ApplicationRunner {
     @Autowired
     MessageSource messageSource;
 
-    @Autowired
-    ApplicationEventPublisher applicationEventPublisher;
 
-    @Autowired
-    ResourceLoader resourceLoader;
 
-    @Override
+    /*@Override
     public void run(ApplicationArguments args) throws Exception {
         Environment environment = applicationContext.getEnvironment();
         System.out.println(environment.getProperty("app.name"));
@@ -57,5 +78,5 @@ public class AppRunner implements ApplicationRunner {
         String description = resource.getDescription();
         System.out.println("description = " + description);
 
-    }
+    }*/
 }

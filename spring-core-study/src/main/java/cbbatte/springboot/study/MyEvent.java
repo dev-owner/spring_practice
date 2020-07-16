@@ -1,7 +1,6 @@
 package cbbatte.springboot.study;
 
 //POJO
-//unintrinsic
 
 public class MyEvent {
 
